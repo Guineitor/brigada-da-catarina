@@ -6168,6 +6168,10 @@ button.bg-light:focus {
   background-color: #FEF100 !important;
 }
 
+.bg-communist {
+  background-color: rgb(197, 12, 12) !important;
+}
+
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
 button.bg-dark:focus {
