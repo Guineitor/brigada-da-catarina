@@ -6,7 +6,7 @@
     "fotos": ["bg-masthead.jpg"],
     "autor": "Comuna da Catarina",
     "data": "30/06/2020",
-    "permalink": "1"
+    "permalink": "permalink-1"
 }, 
 {
     "titulo": "Comuna da Catarina",
@@ -15,5 +15,5 @@
     "fotos": ["bg-masthead.jpg"],
     "autor": "Comuna da Catarina",
     "data": "30/06/2020",
-    "permalink": "2"
+    "permalink": "permalink-2"
 }]
