@@ -63,7 +63,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("index")
 		if r.Method != http.MethodGet {
-			index.Execute(w, nil)
+			_404.Execute(w, nil)
 			return
 		}
 		index.Execute(w, struct{ Success bool }{true})
