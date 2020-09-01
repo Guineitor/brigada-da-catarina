@@ -50,11 +50,12 @@ func GetPosts() Posts {
 }
 
 func main() {
-
-	index := template.Must(template.ParseFiles("template/index.html"))
-	manifesto := template.Must(template.ParseFiles("template/manifesto.html"))
-	blog := template.Must(template.ParseFiles("template/blog.html"))
-	_404 := template.Must(template.ParseFiles("template/404.html"))
+	homeDir, _ := os.UserHomeDir()
+	projectDir := homeDir + "/go/brigadacatarina/"
+	index := template.Must(template.ParseFiles(projectDir + "template/index.html"))
+	manifesto := template.Must(template.ParseFiles(projectDir + "template/manifesto.html"))
+	blog := template.Must(template.ParseFiles(projectDir + "template/blog.html"))
+	_404 := template.Must(template.ParseFiles(projectDir + "template/404.html"))
 
 	fs := http.FileServer(http.Dir("assets/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
