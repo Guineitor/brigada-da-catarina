@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/gorilla/mux"
 )
 
 type Post struct {
@@ -50,12 +52,14 @@ func GetPosts() Posts {
 }
 
 func main() {
-	homeDir, _ := os.UserHomeDir()
-	projectDir := homeDir + "/go/brigadacatarina/"
-	index := template.Must(template.ParseFiles(projectDir + "template/index.html"))
-	manifesto := template.Must(template.ParseFiles(projectDir + "template/manifesto.html"))
-	blog := template.Must(template.ParseFiles(projectDir + "template/blog.html"))
-	_404 := template.Must(template.ParseFiles(projectDir + "template/404.html"))
+	r := mux.NewRouter()
+	// homeDir, _ := os.UserHomeDir()
+	// projectDir := homeDir + "/go/brigadacatarina/"
+	index := template.Must(template.ParseFiles("template/index.html"))
+	manifesto := template.Must(template.ParseFiles("template/manifesto.html"))
+	blog := template.Must(template.ParseFiles("template/blog.html"))
+	_404 := template.Must(template.ParseFiles("template/404.html"))
+	// postPage := template.Must(template.ParseFiles("template/post.html"))
 
 	fs := http.FileServer(http.Dir("assets/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -99,13 +103,20 @@ func main() {
 		_404.Execute(w, struct{ Success bool }{true})
 	})
 
-	http.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("not-found")
-		if r.Method != http.MethodGet {
-			_404.Execute(w, nil)
-			return
-		}
-		_404.Execute(w, struct{ Success bool }{true})
+	// http.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
+	// 	fmt.Println("not-found")
+	// 	if r.Method != http.MethodGet {
+	// 		_404.Execute(w, nil)
+	// 		return
+	// 	}
+	// 	postPage.Execute(w, struct{ Success bool }{true})
+	// })
+
+	r.HandleFunc("/post/{permalink}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		permalink := vars["permalink"]
+
+		fmt.Fprintf(w, "You've requested the book: %s on page ", permalink)
 	})
 
 	http.ListenAndServe(":9990", nil)
